@@ -1,6 +1,8 @@
 from django.urls import path
 from plantilla33_app import views
 
+"cambio de prueba"
+
 urlpatterns = [
     path('', views.dashboard),
     path('wall/new', views.AddNewDev),

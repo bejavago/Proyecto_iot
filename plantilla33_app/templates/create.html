@@ -1,50 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="A really cool site!">
-    <!-- Bootstrap CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'login_reg_app/css/custom-bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'login_reg_app/css/style.css' %}">
-    <script src="{% static 'login_reg_app/js/script.js' %}"></script>
-</head>
-
-<body>
-    <nav class="navbar navbar-dark bg-dark">
-        <img src="/static/images/smart.png" width="164" height="76">
-        <h1 class="navbar-brand">Smart Agro: <span class="text-primary">Device Registration</span></h1>
-        <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </nav>
+{% extends 'base.html' %}
+{% block contenido %}
     <div class="container">
+
         <!-- Registration and Login titles -->
         <div class="row mt-5">
+
             <div class="col justify-content-start">
                 <h1 class="mb-5 text-center display-4"><strong> Device Registration</strong></h1>
             </div>
+
             <div class="col"></div>
             
         </div>
         <!-- Registration sub-titles and input fields -->
+
         <div class="row">
-            <div class="col justify-content-center">
-                <form action="/dashboard/wall/new" method="POST">
+
+            <div class="justify-content-center w-50">
+
+                <form action="" method="post">
                     {% csrf_token %}
                     <div class="row">
                         {% if messages %}
@@ -55,29 +29,17 @@
                         </ul>
                         {% endif %}
                     </div>
-                    <div class="form-group">
-                        <label class="custom-title" for="type">Device Name</label>
-                        <input type="text" class="form-control ml-3" id="type" name="type">
-                    </div>
-                    <div class="form-group">
-                        <label class="custom-title mt-2" for="placed">Placed</label>
-                        <input type="text" class="form-control ml-3" id="placed" name="placed">
-                    </div>
-                    <div class="form-group">
-                        <label class="custom-title mt-2" for="details">Details</label>
-                        <input type="text" class="form-control ml-3" id="details" name="details">
-                    </div>
-                                        
                     
+                    {{ form }}
+
                     <div class="text-center">
                         <button type="submit" class="text-center btn btn-primary mt-2 pl-4 pr-4">Register</button>
                     </div>
+
                 </form>
+
             </div>
-            
             
         </div>
     </div>
-</body>
-
-</html>
+{% endblock %}

@@ -2,42 +2,62 @@ from django.shortcuts import render, redirect
 from login_reg_app.models import User
 from django.contrib import messages
 import bcrypt
+from django.views import View
+from login_reg_app.forms import LoginForm, RegisterForm
 
 # Create your views here.
-def Login_Reg(request):
-    return render(request, 'login_reg.html')
 
-def Register(request):
-    print(request.POST)
-    errors = User.objects.validate_register(request.POST)
-    if len(errors) > 0:
-        print("Errors",errors)
-        for key, value in errors.items():
-            messages.error(request, value)
-        return redirect('/')
-    else:
-        pwhash = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
-        user = User.objects.create(first_name=request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=pwhash.decode())
-        print("User: ", user)
-        request.session['id'] = user.id
-    return redirect('/dashboard')
+class LoginLocal(View):
+    def get(self, request):
+        contexto = {
+            'formLogin': LoginForm(),
+        }
+        print(contexto)
+        return render(request, 'login_reg_app/login.html', contexto)
+    
+class RegisterLocal(View):
+    def get(self, request):
+        contexto = {
+            'formRegister': RegisterForm(),
+        }
+        print(contexto)
+        return render(request, 'login_reg_app/register.html', contexto)
+        
 
-def Login(request):
-    errors = User.objects.validate_login(request.POST)
-    if len(errors) > 0:
-        for key, value in errors.items():
-            messages.error(request, value)
-        return redirect('/')
-    else:
-        user = User.objects.get(email=request.POST['email'])
-        request.session['id'] = user.id
-    return redirect('/dashboard')
+# def Login_Reg(request):
+#     return render(request, 'login_reg.html')
 
-def Success(request):
-    user = User.objects.get(id=request.session['id'])
-    return render(request, 'login_reg_app/success.html', {'user':user})
+# def Register(request):
+#     print(request.POST)
+#     errors = User.objects.validate_register(request.POST)
+#     if len(errors) > 0:
+#         print("Errors",errors)
+#         for key, value in errors.items():
+#             messages.error(request, value)
+#         return redirect('/')
+#     else:
+#         pwhash = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
+#         user = User.objects.create(first_name=request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'], password=pwhash.decode())
+#         print("User: ", user)
+#         request.session['id'] = user.id
+#     return redirect('/dashboard')
 
-def Logout(request):
-    request.session.clear()
-    print("Logged Out")
-    return redirect('/')
+# def Login(request):
+#     errors = User.objects.validate_login(request.POST)
+#     if len(errors) > 0:
+#         for key, value in errors.items():
+#             messages.error(request, value)
+#         return redirect('/')
+#     else:
+#         user = User.objects.get(email=request.POST['email'])
+#         request.session['id'] = user.id
+#     return redirect('/dashboard')
+
+# def Success(request):
+#     user = User.objects.get(id=request.session['id'])
+#     return render(request, 'login_reg_app/success.html', {'user':user})
+
+# def Logout(request):
+#     request.session.clear()
+#     print("Logged Out")
+#     return redirect('/')

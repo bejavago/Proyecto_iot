@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # OWN APPS
     'plantilla33_app',
     'login_reg_app',
+    'core',
     
 ]
 

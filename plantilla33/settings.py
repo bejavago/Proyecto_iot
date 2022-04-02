@@ -37,8 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # OWN APPS
     'plantilla33_app',
     'login_reg_app',
+    
 ]
 
 MIDDLEWARE = [

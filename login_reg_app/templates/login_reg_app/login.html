@@ -84,7 +84,8 @@
             <div class="mb-3 row">
                 <div class="col-sm-5"></div>
                 <div class="col-sm-7">
-                <button class="px-5 btn btn-outline-danger rounded-pill" type="submit"> <i class="fa fa-google" aria-hidden="true"></i> Google </button>
+                <a class="px-5 btn btn-outline-danger rounded-pill" href="{% url 'social:begin' 'google-oauth2' %}"> <i class="fa fa-google" aria-hidden="true"></i> Google </a>
+                {% comment %} colocar la url asociada en el proyecto para realizar la coneccion {% endcomment %}
             </div>
             <div class="mt-3 row">
                 <div class="col-sm-5"></div>

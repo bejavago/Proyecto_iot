@@ -28,7 +28,7 @@ class LoginForm(forms.ModelForm):
     class Meta:
         model = User    #Usuario es la clase creada en la BD
         fields = ['username', 'password']
-        
+                
         labels = {
             'username': 'User/Correo:  ',
             'password': 'Contraseña  ',
@@ -37,5 +37,9 @@ class LoginForm(forms.ModelForm):
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.TextInput(attrs={'class': 'form-control'}), 
             'password': forms.PasswordInput(attrs={'class': 'form-control'}), 
-        }  
+        }
+        
+        
+             
+        
  

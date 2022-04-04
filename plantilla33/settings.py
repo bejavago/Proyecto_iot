@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import json
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -110,9 +112,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
@@ -144,3 +146,32 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
 SOCIAL_AUTH_GITHUB_KEY = 'b698e9a1d1203c968588'
 SOCIAL_AUTH_GITHUB_SECRET = '144347bbc318803c5431b6fed477e4825c10e9f3' 
+
+# SMTP 
+# GMAIL : STMP 
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = '86496e76dcd8b4'
+EMAIL_HOST_PASSWORD = '030c6943d188fd'
+EMAIL_PORT = '2525'
+
+EMAIL_SETTINGS_FILE = os.path.join(BASE_DIR, 'email_settings.json')
+with open(EMAIL_SETTINGS_FILE) as data_file:
+    email_settings = json.load(data_file)
+
+EMAIL_HOST= email_settings['EMAIL_HOST']
+EMAIL_PORT = email_settings['EMAIL_PORT']
+EMAIL_USE_TLS = email_settings['EMAIL_USE_TLS']
+DEFAULT_FROM_EMAIL = 'smartagro'
+SERVER_EMAIL = 'smartagro'
+EMAIL_HOST_USER = email_settings['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = email_settings['EMAIL_HOST_PASSWORD']
+
+# EMAIL_HOST= 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = 'ingenieroteleco'
+# SERVER_EMAIL = 'ingenieroteleco'
+# EMAIL_HOST_USER ="ingenieroteleco@gmail.com"
+# EMAIL_HOST_PASSWORD = "Noviembre2020*"

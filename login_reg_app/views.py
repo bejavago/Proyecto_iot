@@ -6,6 +6,7 @@ import bcrypt
 from django.views import View
 from login_reg_app.forms import LoginForm, RegisterForm
 from django.urls import reverse
+from login_reg_app.email import EmailThread
 
 # Create your views here.
 
@@ -76,6 +77,13 @@ class RegisterLocal(View):
             usuario.password =bcrypt.hashpw(usuario.password.encode(), bcrypt.gensalt()).decode()
             usuario.save()
             messages.success(request, 'usuario agregado correctamente')
+            
+            EmailThread("Correo de Prueba ASINCRONICA", 
+                        'login_reg_app/correo.html', 
+                        ['ingenieroteleco@gmail.com']
+                        ).start()
+            
+            
             return redirect(reverse('login_reg_app:login'))
         else:            
             contexto = {

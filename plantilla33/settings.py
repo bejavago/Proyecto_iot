@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     # OWN APPS
     'plantilla33_app',
     'login_reg_app',
+    'core',
+    'social_django', #registro con google, twitter, facebook...etc
     
 ]
 
@@ -123,8 +125,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_REDIRECT_URL = 'login_reg_app:workload' #pagina destino cuando se logea por google
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#autenticacion para la el registro y validacion de google. Hashes
+AUTHENTICATION_BACKENDS=['social_core.backends.google.GoogleOAuth2',
+                        'django.contrib.auth.backends.ModelBackend',
+]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '571772451183-dl11hfafimrp190bcktl52982lc34b1a.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'  

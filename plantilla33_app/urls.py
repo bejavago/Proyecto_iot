@@ -2,6 +2,7 @@ from django.urls import path
 from plantilla33_app import views
 from .views import AddNewDev, Dashboard, EditDev
 
+app_name = 'plantilla33_app'
 
 "cambio de prueba"
 

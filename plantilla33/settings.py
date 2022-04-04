@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-rx1(2xedv2wxs^&gl0zc#hxgv(3^#=7n6&&w_i8v)ec!3omf@f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'smartagrocol.org']
 
 # Application definition
 
@@ -43,7 +42,8 @@ INSTALLED_APPS = [
     'login_reg_app',
     'core',
     'social_django', #registro con google, twitter, facebook...etc
-    
+    'django_extensions', #para usar openssl
+    'werkzeug_debugger_runserver',
 ]
 
 MIDDLEWARE = [
@@ -135,7 +135,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #autenticacion para la el registro y validacion de google. Hashes
 AUTHENTICATION_BACKENDS=['social_core.backends.google.GoogleOAuth2',
                         'django.contrib.auth.backends.ModelBackend',
+                        'social_core.backends.facebook.FacebookOAuth2',
+                        'social_core.backends.github.GithubOAuth2',
 ]
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '571772451183-dl11hfafimrp190bcktl52982lc34b1a.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'  
+
+SOCIAL_AUTH_GITHUB_KEY = 'b698e9a1d1203c968588'
+SOCIAL_AUTH_GITHUB_SECRET = '144347bbc318803c5431b6fed477e4825c10e9f3' 

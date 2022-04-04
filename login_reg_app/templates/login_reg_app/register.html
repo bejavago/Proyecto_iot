@@ -68,7 +68,7 @@
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
                         <button class="mt-4 px-5 btn btn-primary rounded-pill offset-2 google" type="submit"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Continua </button>
-                        <p class="mt-3">¿ya tienes una cuenta? <a href="#">Iniciar sesion</a> </p>
+                        <p class="mt-3">¿ya tienes una cuenta? <a href="{% url 'login_reg_app:login' %}">Iniciar sesion</a> </p>
                     </div>
                 </div>
             </form>
@@ -80,7 +80,7 @@
             <div class="mb-3 row">
                 <div class="col-sm-5"></div>
                 <div class="col-sm-7">
-                <button class="px-5 btn btn-outline-danger rounded-pill" type="submit"> <i class="fa fa-google" aria-hidden="true"></i> Google </button>
+                <button class="px-5 btn btn-outline-danger rounded-pill" type="submit" href="{% url 'social:begin' 'google-oauth2' %}"> <i class="fa fa-google" aria-hidden="true"></i> Google </button>
             </div>
             <div class="mt-3 row">
                 <div class="col-sm-5"></div>

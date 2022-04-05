@@ -127,7 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-LOGIN_REDIRECT_URL = 'login_reg_app:workload' #pagina destino cuando se logea por google
+LOGIN_REDIRECT_URL = 'plantilla33_app:dashboard' #pagina destino cuando se logea por google
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -150,23 +150,35 @@ SOCIAL_AUTH_GITHUB_SECRET = '144347bbc318803c5431b6fed477e4825c10e9f3'
 # SMTP 
 # GMAIL : STMP 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.mailtrap.io'
-EMAIL_HOST_USER = '86496e76dcd8b4'
-EMAIL_HOST_PASSWORD = '030c6943d188fd'
-EMAIL_PORT = '2525'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.mailtrap.io'
+# EMAIL_HOST_USER = '86496e76dcd8b4'
+# EMAIL_HOST_PASSWORD = '030c6943d188fd'
+# EMAIL_PORT = '2525'
 
-EMAIL_SETTINGS_FILE = os.path.join(BASE_DIR, 'email_settings.json')
+EMAIL_SETTINGS_FILE = os.path.join(BASE_DIR, 'emailtrap_settings.json')
 with open(EMAIL_SETTINGS_FILE) as data_file:
-    email_settings = json.load(data_file)
+    emailtrap_settings = json.load(data_file)
 
-EMAIL_HOST= email_settings['EMAIL_HOST']
-EMAIL_PORT = email_settings['EMAIL_PORT']
-EMAIL_USE_TLS = email_settings['EMAIL_USE_TLS']
-DEFAULT_FROM_EMAIL = 'smartagro'
-SERVER_EMAIL = 'smartagro'
-EMAIL_HOST_USER = email_settings['EMAIL_HOST_USER']
-EMAIL_HOST_PASSWORD = email_settings['EMAIL_HOST_PASSWORD']
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = emailtrap_settings['EMAIL_HOST']
+EMAIL_HOST_USER = emailtrap_settings['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = emailtrap_settings['EMAIL_HOST_PASSWORD']
+EMAIL_PORT = emailtrap_settings['EMAIL_PORT']
+
+
+
+# EMAIL_SETTINGS_FILE = os.path.join(BASE_DIR, 'email_settings.json')
+# with open(EMAIL_SETTINGS_FILE) as data_file:
+#     email_settings = json.load(data_file)
+
+# EMAIL_HOST= email_settings['EMAIL_HOST']
+# EMAIL_PORT = email_settings['EMAIL_PORT']
+# EMAIL_USE_TLS = email_settings['EMAIL_USE_TLS']
+# DEFAULT_FROM_EMAIL = 'smartagro'
+# SERVER_EMAIL = 'smartagro'
+# EMAIL_HOST_USER = email_settings['EMAIL_HOST_USER']
+# EMAIL_HOST_PASSWORD = email_settings['EMAIL_HOST_PASSWORD']
 
 # EMAIL_HOST= 'smtp.gmail.com'
 # EMAIL_PORT = 587

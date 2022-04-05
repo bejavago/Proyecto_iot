@@ -1,6 +1,6 @@
 from django.urls import path
 # from . import views
-from .views import LoginLocal, RegisterLocal, logout, workload
+from .views import LoginLocal, RegisterLocal, logout, workload, validador
 # from login_reg_app import views
 
 app_name = 'login_reg_app'
@@ -10,6 +10,7 @@ urlpatterns = [
     path('', LoginLocal.as_view(), name='login'),
     path('register/', RegisterLocal.as_view(), name='register'),
     path('logout/', logout, name='logout'),
+    path('validador/', validador.as_view(), name='validador'),
     path('workload/', workload, name='workload')
     # path('', views.Login_Reg),
     # path('register', views.Register),

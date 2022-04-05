@@ -39,7 +39,6 @@ class EmailThread(threading.Thread):
 
     def run (self):
         template = get_template(self.template_correo)
-
         content = template.render({
             'usuario': 'Javier Melendez',
             'session_user' : 'PRUEBA ASINCRONICA'

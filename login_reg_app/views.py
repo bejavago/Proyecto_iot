@@ -29,17 +29,18 @@ class LoginLocal(View):
         
         if form.is_valid():
             
-            usernew = User.objects.filter(Q(username=form.cleaned_data['username'])| Q(email=form.cleaned_data['username'])).first()
-            if usernew:
+            user = User.objects.filter(Q(username=form.cleaned_data['username'])| Q(email=form.cleaned_data['username'])).first()
+            if user:
                 form_password = form.cleaned_data['password']
-                if bcrypt.checkpw(form_password.encode(), usernew.password.encode()):
+                if bcrypt.checkpw(form_password.encode(), user.password.encode()):
                 # Si existe el usuario y si obtenemos True después de validar la contraseña, podemos poner la identificación del usuario en la sesión
                     print(f'*'*10,'estoy verificando')
                     messages.success(request, 'Bienvenido')
-                    request.session['usuario'] = { 'nombre' : usernew.nombre, 'username' : usernew.username, 'email' : usernew.email, 'id' : usernew.id}
+                    request.session['usuario'] = { 'nombre' : user.nombre, 'username' : user.username, 'email' : user.email, 'id' : user.id}
+                    request.session['id'] = user.id
                     # iduser = request.session['usuario'] 
                     # idname=iduser['nombre']
-                    return redirect ("/workload")                    
+                    return redirect(reverse('plantilla33_app:dashboard'))                    
                     # contexto = {}
                     # return render(request, 'login_reg_app/workload.html', contexto)
 
@@ -104,6 +105,20 @@ def workload(request):
     if request.method == 'GET':
         context = {}
         return render(request, 'login_reg_app/workload.html', context)
+    
+class validador(View):  #se puede optimizar? reusando la clase, como hago para el return
+    def get(self, request):
+        
+        # if 'usuario' in request.session:
+        #     messages.error(request, 'Ya estas logeado, para salir click en salir')
+        #     return redirect ("/workload")
+        
+        contexto = {
+            'formLogin': LoginForm(),
+            }
+        print(contexto)
+        return render(request, 'login_reg_app/validador.html', contexto)
+    
 # def Login_Reg(request):
 #     return render(request, 'login_reg.html')
 

@@ -2,7 +2,6 @@ from django import forms
 from login_reg_app.models import User
 from login_reg_app.views import *
 
-
 class RegisterForm(forms.ModelForm):
     
     class Meta:
@@ -15,6 +14,8 @@ class RegisterForm(forms.ModelForm):
             'email': 'Correo  ',  
             'password': 'Contraseña  ',
         }
+        
+        # verbose_name = ['nombre de usuario', 'username', 'email', 'password']
         
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),

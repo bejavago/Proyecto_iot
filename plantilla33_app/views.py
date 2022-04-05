@@ -4,7 +4,10 @@ from django.urls import reverse
 from django.views import View
 
 # modelos
-from plantilla33_app.models import Device, User
+from plantilla33_app.models import Device
+from login_reg_app.models import User
+
+
 from plantilla33_app.forms import DeviceForm
 
 # otros
@@ -34,14 +37,32 @@ class Dashboard(View):
         # obtenemos el usuario de la sesion
         user = User.objects.get(id=request.session['id'])
         devicess= Device.objects.all()
-
+        user2= request.user.id
+        print(user2)
+        
         context = {
             'user': user,
             'all_devicess':devicess
         }
         
-        return render(request, 'dashboard.html', context)
-
+        return render(request, 'plantilla33_app/dashboard.html', context)
+        
+        # if User.objects.get(id=request.session['id']).exist():
+        #     user = User.objects.get(id=request.session['id'])
+        #     context = {
+        #         'user': user,
+        #         'all_devicess':devicess
+        #     }
+        
+        #     return render(request, 'plantilla33_app/dashboard.html', context)
+        # else:
+            
+        #     context = {
+        #         'user': user2,
+        #         'all_devicess':devicess
+        #     }
+        
+        #     return render(request, 'plantilla33_app/dashboard.html', context)
 
 
 ####################################################################
@@ -57,7 +78,7 @@ class AddNewDev(View):
             'form': form,
             'user': user,
         }
-        return render(request, 'create.html', context)
+        return render(request, 'plantilla33_app/create.html', context)
 
     def post(self, request):
         print(request.POST)
@@ -67,12 +88,12 @@ class AddNewDev(View):
             new_device = form.save(commit=False)
             new_device.added_by = User.objects.get(id=request.session['id'])
             form.save()
-            return redirect(reverse('dashboard'))
+            return redirect(reverse('plantilla33_app:dashboard'))
         else:
             context = {
                 'form': form,
             }
-            return render(request,'create.html', context)
+            return render(request,'plantilla33_app/create.html', context)
 
 
 def ViewDev(request, id): # GET /wall/<id>
@@ -83,7 +104,7 @@ def ViewDev(request, id): # GET /wall/<id>
         'temp' : sensor()
 
     }
-    return render(request, 'DevShow.html', context)
+    return render(request, 'plantilla33_app/DevShow.html', context)
 
 class EditDev(View):
     def get(self, request, id):
@@ -95,27 +116,27 @@ class EditDev(View):
             'user': user,
             'device': device,
         }
-        return render(request, 'EditDev.html', context)
+        return render(request, 'plantilla33_app/EditDev.html', context)
 
     def post(self, request, id):
         device = Device.objects.get(id=id)
         form = DeviceForm(request.POST, instance=device)
         if form.is_valid():
             form.save()
-            return redirect(reverse('dashboard'))
+            return redirect(reverse('plantilla33_app:dashboard'))
         else:
             context = {
                 'form': form,
                 'device': device,
             }
-            return render(request, 'EditDev.html', context)
+            return render(request, 'plantilla33_app/EditDev.html', context)
 # *********************************************
 
 # 7 POST Device/<id>/destroy
 def DeleteDev(request, id):
     device = Device.objects.get(id=id)
     device.delete()
-    return redirect('/dashboard')
+    return redirect(reverse('plantilla33_app:dashboard'))
 # *********************************************
 
 def Logout(request):

@@ -1,5 +1,5 @@
 {% extends "core/foundation.html" %}
-{% block titulo %} Register {% endblock %}
+{% block titulo %} Validador {% endblock %}
 {% block contenido %}
 {% include 'core/header.html' %} 
 
@@ -31,16 +31,16 @@
     <div class="row">
         <div class="col-4"> </div>
         <div class="col-5"> 
-        <h3><i class="fa fa-sign-in" aria-hidden="true"></i> REGISTER </h3>
+        <h3><i class="fa fa-sign-in" aria-hidden="true"></i> VALIDADOR </h3>
         </div>
         <div class="col-4"> </div>
         <div class="col-5 border border-light rounded-3 shadow p-3 mb-5 bg-body rounded">
             
-            <form action="" method="post" >
+            <form action="{% url 'login_reg_app:workload' %}" method="post" >
                 {% csrf_token %}
-                {{ formRegister.non_field_errors }}   
+                {{ formLogin.non_field_errors }}   
 
-                {% for field in formRegister %}
+                {% for field in formLogin %}
                 <div class="mt-3 row">
 
 
@@ -67,30 +67,10 @@
                 <div class="mb-3 row">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9">
-                        <button class="mt-4 px-5 btn btn-primary rounded-pill offset-2 google" type="submit"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Continua </button>
-                        <p class="mt-3">¿ya tienes una cuenta? <a href="{% url 'login_reg_app:login' %}">Iniciar sesion</a> </p>
+                        <button class="mt-4 px-5 btn btn-primary rounded-pill offset-2 google" type="submit"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Ingresar </button>
                     </div>
                 </div>
-            </form>
-            <div class="mt-1 row">
-                <div class="col-sm-5"></div>
-                <div class="col-sm-7">
-                <p> o continúa con </p>
-            </div>
-            <div class="mb-3 row">
-                <div class="col-sm-5"></div>
-                <div class="col-sm-7">
-                <button class="px-5 btn btn-outline-danger rounded-pill" type="submit" href="{% url 'social:begin' 'google-oauth2' %}"> <i class="fa fa-google" aria-hidden="true"></i> Google </button>
-            </div>
-            <div class="mt-3 row">
-                <div class="col-sm-5"></div>
-                <div class="col-sm-7">
-                <button class="px-5 btn btn-outline-primary rounded-pill" type="submit"> <i class="fa fa-facebook-official" aria-hidden="true"></i> Facebook </button>
-            </div>
-        
-        
-
-        </div> 
+            </div> 
     </div>
 </div>
 

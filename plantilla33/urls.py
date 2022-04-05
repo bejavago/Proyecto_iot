@@ -22,5 +22,5 @@ urlpatterns = [
     path('dashboard/', include('plantilla33_app.urls')),
     path('core/', include('core.urls')),
     path('social-auth/',include('social_django.urls',namespace='social')),  #url asociada a la autenticacion de google
-    
+    path('admin/', admin.site.urls),
 ]

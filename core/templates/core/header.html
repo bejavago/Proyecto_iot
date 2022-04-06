@@ -1,0 +1,9 @@
+<nav class="navbar navbar-dark bg-dark">
+    <img src="/static/images/smart.png" width="164" height="76">
+    <h1 class="navbar-brand">Smart Agro: <span class="text-primary">{% block titulo %} {% endblock %}</span></h1>
+    <div class="d-flex">
+        <span class="form-control me-2">Bienvenid@ {{request.session.usuario.nombre}} {{request.user.first_name}} </span>
+        <a href="{% url 'login_reg_app:logout' %}" class="btn btn-secondary">Salir</a>
+    </div>
+</nav>
+{% comment %} first_name es el campo en la base de datos que se crea en django para las autenticaciones {% endcomment %}

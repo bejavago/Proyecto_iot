@@ -1,12 +1,20 @@
-from turtle import delay
+# django
 from django.shortcuts import render, redirect
-# from apps.wall_app.models import User
-from plantilla33_app.models import Device, User
-import time
+from django.urls import reverse
+from django.views import View
 
+# modelos
+from plantilla33_app.models import Device
+from login_reg_app.models import User
+
+
+from plantilla33_app.forms import DeviceForm
+
+# otros
 from paho.mqtt import client as mqtt_client
 import random
 import json
+import time
 
 broker = '127.0.0.1'
 #broker = '192.168.1.11'
@@ -21,27 +29,72 @@ password = '12345678'
 deviceId = "s3s9TFhT9WbDsA0CxlWeAKuZykjcmO6PoxK6"
 datoss = {}
 
-# Create your views here.
-def dashboard(request):
-    user = User.objects.get(id=request.session['id'])
-    devicess= Device.objects.all()
 
-    context = {
-        'user': user,
-        'all_devicess':devicess
-    }
-    return render(request,'dashboard.html', context)
+
+class Dashboard(View):
+    def get(self, request):
+        
+        # obtenemos el usuario de la sesion
+        user = User.objects.get(id=request.session['id'])
+        devicess= Device.objects.all()
+        user2= request.user.id
+        print(user2)
+        
+        context = {
+            'user': user,
+            'all_devicess':devicess
+        }
+        
+        return render(request, 'plantilla33_app/dashboard.html', context)
+        
+        # if User.objects.get(id=request.session['id']).exist():
+        #     user = User.objects.get(id=request.session['id'])
+        #     context = {
+        #         'user': user,
+        #         'all_devicess':devicess
+        #     }
+        
+        #     return render(request, 'plantilla33_app/dashboard.html', context)
+        # else:
+            
+        #     context = {
+        #         'user': user2,
+        #         'all_devicess':devicess
+        #     }
+        
+        #     return render(request, 'plantilla33_app/dashboard.html', context)
+
 
 ####################################################################
 
-def AddNewDev(request):
-    if request.method == 'GET':
-        return render(request,'create.html' )
-    elif request.method == 'POST':
+class AddNewDev(View):
+    
+    
+    
+    def get(self, request):
+        user = User.objects.get(id=request.session['id'])
+        form = DeviceForm()
+        context = {
+            'form': form,
+            'user': user,
+        }
+        return render(request, 'plantilla33_app/create.html', context)
+
+    def post(self, request):
         print(request.POST)
-        userss = User.objects.get(id=request.session['id'])
-        item1= Device.objects.create(type=request.POST['type'],placed=request.POST['placed'],details=request.POST['details'], added_by=userss )
-        return redirect('/dashboard')
+        form = DeviceForm(request.POST)
+        
+        if form.is_valid():
+            new_device = form.save(commit=False)
+            new_device.added_by = User.objects.get(id=request.session['id'])
+            form.save()
+            return redirect(reverse('plantilla33_app:dashboard'))
+        else:
+            context = {
+                'form': form,
+            }
+            return render(request,'plantilla33_app/create.html', context)
+
 
 def ViewDev(request, id): # GET /wall/<id>
 
@@ -51,29 +104,39 @@ def ViewDev(request, id): # GET /wall/<id>
         'temp' : sensor()
 
     }
-    return render(request, 'DevShow.html', context)
+    return render(request, 'plantilla33_app/DevShow.html', context)
+
+class EditDev(View):
+    def get(self, request, id):
+        user = User.objects.get(id=request.session['id'])
+        device = Device.objects.get(id=id)
+        form = DeviceForm(instance=device)
+        context = {
+            'form': form,
+            'user': user,
+            'device': device,
+        }
+        return render(request, 'plantilla33_app/EditDev.html', context)
+
+    def post(self, request, id):
+        device = Device.objects.get(id=id)
+        form = DeviceForm(request.POST, instance=device)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('plantilla33_app:dashboard'))
+        else:
+            context = {
+                'form': form,
+                'device': device,
+            }
+            return render(request, 'plantilla33_app/EditDev.html', context)
 # *********************************************
-# 5 GET /shows/<id>
-def EditDev(request, id):
-    context = {
-        'device': Device.objects.get(id=id)
-    }
-    return render(request, 'EditDev.html', context)
-# *********************************************
-# 6 POST shows/<id>/update
-def UpdateDev(request, id):
-    device = Device.objects.get(id=id)
-    device.type = request.POST['type']
-    device.placed = request.POST['placed']
-    device.details = request.POST['details']
-    device.save()
-    return redirect('/dashboard')
-# *********************************************
+
 # 7 POST Device/<id>/destroy
 def DeleteDev(request, id):
     device = Device.objects.get(id=id)
     device.delete()
-    return redirect('/dashboard')
+    return redirect(reverse('plantilla33_app:dashboard'))
 # *********************************************
 
 def Logout(request):

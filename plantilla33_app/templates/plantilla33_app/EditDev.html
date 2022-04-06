@@ -1,0 +1,42 @@
+{% extends 'plantilla33_app/base.html' %}
+{% block contenido %}
+    <div class="container">
+
+        <div class="mt-4 mb-3 d-flex justify-content-between">
+            <h1>Edit</h1>
+            <a href="/dashboard" class="top nav-style btn btn-outline-primary h-25">&#8249;&nbsp;&nbsp;Go Back</a>
+        </div>
+        <h2 class="text-left d-inline ">Device: {{ device.name }} </h2>
+
+
+        <div class="row mt-5 justify-content-start">
+
+            <div class="col-8 w-50">
+                <form action="/dashboard/wall/{{ device.id }}/update" method="POST">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        {% if messages %}
+                        <ul class="messages mb-4 error-box none">
+                            {% for message in messages %}
+                            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+
+                    {{form}}
+
+                    <div class="mt-3 d-flex justify-content-center gap-3">
+                        <button type="submit" class="btn btn-primary pl-4 pr-4" name="updated_at" value="{{ device.updated_at }}">Update</button>
+                        <a href="{% url 'plantilla33_app:dashboard' %}" class="btn btn-danger pl-4 pr-4"> Cancel</a>
+                    </div>                    
+                    
+                    
+                </form>    
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

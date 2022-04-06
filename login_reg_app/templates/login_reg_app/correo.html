@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+</head>
+<body>
+    <h1>Bienvenido a SMARTAGRO</h1>
+    <p>Variable del CONTEXTO: {{usuario}}</p>
+    <p>Desde la variable de SESION: {{session_user}}</p>
+    <p>acceder al siguiente link para darse de alta en el sistema. Tienes 24 hrs para realizar la confirmación. <a href="http:127.0.0.1:8000/validador">Link en este enlace para validar</a><p>
+</body>
+</html>

@@ -5,10 +5,11 @@ from login_reg_app.models import User
 class Device(models.Model):
     
     TYPE_DEVICE = (
-        ('A', 'OPCION A'),  # ESPECIFICAR TIPOS DE DEVICES
-        ('B', 'OPCION B'),
-        ('C', 'OPCION C'),
-        ('D', 'OPCION D'),
+        ('Arduino UNO', 'Arduino UNO'),
+        ('Raspberry', 'Raspberry'),  # ESPECIFICAR TIPOS DE DEVICES
+        ('ESP8266', 'ESP8266'),
+        ('ESP32', 'ESP32'),
+        # CAMPO PARA AGREGAR MAS DEVICES
     )
     
     COUNTRY_CHOICES = (
@@ -17,14 +18,16 @@ class Device(models.Model):
         ('Brasil', 'Brasil'),
         ('Chile', 'Chile'),
     )
-        
+    
+    
     name = models.CharField(max_length=255)
-    type = models.CharField(max_length=1, choices=TYPE_DEVICE)
+    type = models.CharField(max_length=20, choices=TYPE_DEVICE)
+    device_id = models.CharField(max_length=255, blank=True)
     placed = models.CharField(max_length=20, choices=COUNTRY_CHOICES)
     details= models.CharField(max_length = 60, blank=True)
+    imageDevice = models.FileField(upload_to='images/', blank=True)
     added_by = models.ForeignKey(User,related_name = 'uploaded_item', on_delete = models.CASCADE)
-    #temp = models.CharField(max_length = 60)
-    #hum = models.CharField(max_length = 60)
+    
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     

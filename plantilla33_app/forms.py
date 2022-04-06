@@ -6,11 +6,7 @@ class DeviceForm(forms.ModelForm):
     
     # VALIDACIONES
     
-    def clean_name(self):
-        name = self.cleaned_data.get('name')
-        if len(name) > 8:
-            raise forms.ValidationError('El nombre no puede tener mas de 8 caracteres')
-        return name
+
     
     def clean_type(self):
         type = self.cleaned_data.get('type')
@@ -25,19 +21,26 @@ class DeviceForm(forms.ModelForm):
         return placed
     
     
+    
+    
+    
     class Meta:
+
         model = Device
-        fields = ['name','type', 'placed', 'details']
+        fields = ['name','device_id','type', 'placed', 'details', 'imageDevice']
         
         labels = {
             'name': 'Device Name',
+            'device_id': 'Device ID',
             'type': 'Device Type',
             'placed': 'Placed',
             'details': 'Details',
+            'imageDevice': 'Image',
         }
         
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'device_id': forms.TextInput(attrs={'class': 'form-control'}),
             'type': forms.Select(attrs={'class': 'form-select'}),
             'placed': forms.Select(attrs={'class': 'form-select'}),
             'details': forms.Textarea(attrs={'class': 'form-control', 'rows': '2'}),

@@ -1,0 +1,18 @@
+{% load static %}
+
+<div class="navbar navbar-expand-lg  d-flex justify-content-around border-bottom shadow-sm bg-dark">
+    
+    <a href="{% url 'plantilla33_app:dashboard' %}" class="navbar-brand my-0 mr-md-autofont-weight-normal ">
+        <img src="{% static '/images/smart.png' %}" alt="Logo smartagro" width="164" height="76">
+    </a>
+
+    
+    <h1 class="navbar-brand">Smart Agro: <span class="text-primary">{% block titulo %} {% endblock %}</span></h1>
+    
+    <div class="d-flex">
+        <span class="form-control me-2">Bienvenid@ {{request.session.usuario.nombre}} {{request.user.first_name}} </span>
+        <a href="{% url 'login_reg_app:logout' %}" class="btn btn-secondary">Salir</a>
+    </div>
+
+</div>
+{% comment %} first_name es el campo en la base de datos que se crea en django para las autenticaciones {% endcomment %}
